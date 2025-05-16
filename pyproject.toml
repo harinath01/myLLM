@@ -1,0 +1,16 @@
+[project]
+name = "myllm"
+version = "0.1.0"
+description = "Building a LLM stratch"
+authors = [
+    {name = "hari-testpress",email = "hari@testpress.in"}
+]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
