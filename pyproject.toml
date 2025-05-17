@@ -6,8 +6,9 @@ authors = [
     {name = "hari-testpress",email = "hari@testpress.in"}
 ]
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.13"
 dependencies = [
+    "tiktoken (>=0.9.0,<0.10.0)"
 ]
 
 
