@@ -1,19 +1,14 @@
-import tokenizer
 import tiktoken
 
-with open("/Users/testpress/myLLM/the_verdict.txt", "r", encoding="utf-8") as f:
+with open("/home/hari/workspace/myLLM/the_verdict.txt", "r", encoding="utf-8") as f:
     raw_text = f.read()
 
-tokens = tokenizer.tokenize(raw_text)
-vocabulary = tokenizer.generate_vocabulary(tokens)
-simple_tokenizer = tokenizer.SimpleTokenizerV1(vocabulary)
+tokenizer = tiktoken.get_encoding("gpt2")
+tokens = tokenizer.encode(raw_text)
 
-# print(simple_tokenizer.encode("Hello world.<|endoftext|> in the course of world"))
+context_size = 10
+for i in range(1, context_size + 1):
+    inputs = tokens[:i]
+    target = tokens[i]
+    print(tokenizer.decode(inputs), "---->", tokenizer.decode([target]))
 
-gpt2_tokenizer = tiktoken.get_encoding("gpt2")
-
-token_ids= gpt2_tokenizer.encode("Hello world, in the course of world")
-print(token_ids, gpt2_tokenizer.decode(token_ids))
-token_ids = gpt2_tokenizer.encode("Hari hara nathan")
-for token_id in token_ids:
-    print(token_id, gpt2_tokenizer.decode([token_id]))
