@@ -13,7 +13,7 @@ class GPTDataset(Dataset):
         self.target_token_ids = []
 
         token_ids = tokenizer.encode(txt)
-        
+        print(len(token_ids))
         for i in range(0, len(token_ids)-max_length, stride):
             input_chunk = token_ids[i:i+max_length]
             target_chunk = token_ids[i+1: i+max_length+1]
@@ -38,10 +38,17 @@ def create_gpt_dataloader(txt, batch_size, max_length=256, stride=128, shuffle=T
                       )
 
 
-max_length = 4
-gpt_dataloader = create_gpt_dataloader(raw_text, batch_size=8, max_length=max_length, stride=max_length)
+input_length = 4
+gpt_dataloader = create_gpt_dataloader(raw_text, batch_size=8, max_length=input_length, stride=input_length)
 
-iterator = iter(gpt_dataloader)
-first_batch = next(iterator)
+output_dim = 256
+vocab_size = 50257
+token_embedding_layer = torch.nn.Embedding(vocab_size, output_dim)
+position_embedding_layer = torch.nn.Embedding(input_length, output_dim)
+position_embeddings = position_embedding_layer(torch.arange(input_length))
 
-print(first_batch)
+for batch, inputs in gpt_dataloader:
+    input_embeddings = token_embedding_layer(inputs) + position_embeddings
+    print(input_embeddings)
+
+
